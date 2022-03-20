@@ -123,6 +123,8 @@ function printToJson(jsonObject:Array<IEvaluation>):void {
     ((e) => {
       if (e) {
         console.log(`There was an error writing the file ${e}`);
+      } else {
+        console.log('Evaluation completed and file has been written to output.json');
       }
     }),
   );
