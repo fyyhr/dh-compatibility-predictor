@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const DEBUG = true;
+const DEBUG = false;
 
 interface IAttributes {
   [name: string]: number
@@ -67,20 +67,33 @@ function averageTeam(teamInfo: Array<IIndividual>): IAttributes {
   return attributeAverage;
 }
 
+/**
+ * A function that evaluates individual candidates against a passed team average.
+ * The evaluation is based on named attributes. Only attributes listed in the team's
+ * average is considered in the evaluation. If a candidate does not have a listed attribute
+ * they receive a score of 0 for that attribute. If a candidate has an attribute that
+ * isn't listed for the team, that attribute is ignored. Final scores range from 0 to 1.
+ * @param teamAverage IAttributes The average values of the team's attributes
+ * @param candidateList The raw data of the candidate list
+ * @returns Array<IEvaluation> Objects with the candidates name and their evaluated score.
+ */
 function evaluateCandidates(
   teamAverage: IAttributes,
   candidateList: Array<IIndividual>,
 ): Array<IEvaluation> {
   return candidateList.reduce((result, candidate) => {
-    /* Candidates start at 10 points per attribute and lose points for every 
+    /* Candidates start at 10 points per attribute and lose points for every
      * point off they are from the team average.
+     */
+    /* Doing a percentage difference may be better? I feel that would be more
+     * penalizing for the edges
      */
     const newResult = result;
     let scoreTotal = 0;
     Object.entries(teamAverage).forEach(([key, val]) => {
-      try {
+      if (candidate.attributes[key]) {
         scoreTotal += (10 - Math.abs(val - candidate.attributes[key]));
-      } catch (e) {
+      } else {
         scoreTotal += 0;
       }
     });
@@ -97,18 +110,37 @@ function evaluateCandidates(
   }, []);
 }
 
-function printToJson(jsonObjecT) {
-
+/**
+ * A function that writes the candidate evaluation to a JSON file
+ * TODO: Allow the user to specify an output destination
+ * @param jsonObject Array<IEvaluation> The evaluated candidates
+ * @return {void}
+ */
+function printToJson(jsonObject:Array<IEvaluation>):void {
+  fs.writeFile(
+    './output.json',
+    JSON.stringify(jsonObject, null, 2),
+    ((e) => {
+      if (e) {
+        console.log(`There was an error writing the file ${e}`);
+      }
+    }),
+  );
 }
 
+/**
+ * Driver function
+ */
 async function compatibilityPredictor() {
-  const rawData: IRawData = await loadJsonFile(); /* Await is used since everything needs this data */
+  /* Await is used since everything needs this data */
+  const rawData: IRawData = await loadJsonFile();
   const teamAverage = averageTeam(rawData.team);
   const score = evaluateCandidates(teamAverage, rawData.applicants);
   if (DEBUG) {
     console.dir(teamAverage);
     console.dir(score);
   }
+  printToJson(score);
 }
 
 compatibilityPredictor();

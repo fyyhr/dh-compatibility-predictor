@@ -55,6 +55,16 @@
         "endurance": 1,
         "spicyFoodTolerance": 10
       }
+    },
+    {
+      "name": "Jimothy",
+      "attributes": {
+        "intelligence": 10,
+        "strength": 4,
+        "endurance": 8,
+        "procrastination": 10,
+        "pranking": 10
+      }
     }
   ]
 }
