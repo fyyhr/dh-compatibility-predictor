@@ -2,7 +2,7 @@
   "team": [
     {
       "name": "Eddie",
-      "attributes": { //req doc is missing a colon here
+      "attributes": {
         "intelligence": 1,
         "strength": 5,
         "endurance": 3,
@@ -39,8 +39,8 @@
       }
     },
     {
-      "name": "Jane", //req doc is missing a comma here
-      "attributes": { //req doc has an errant comma here, I'm guessing it stole the line above's
+      "name": "Jane", 
+      "attributes": { 
         "intelligence": 7,
         "strength": 4,
         "endurance": 3,
@@ -52,8 +52,8 @@
       "attributes": {
         "intelligence": 1,
         "strength": 1,
-        "endurance" 1,
-        "spicyFoodTolerance": 10,
+        "endurance": 1,
+        "spicyFoodTolerance": 10
       }
     }
   ]

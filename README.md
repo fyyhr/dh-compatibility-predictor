@@ -3,9 +3,11 @@
 ## To use
 
 ### Assumptions
-  * Attribute rating scale is 1-10
+  * Attribute rating scale is 1-10 in whole numbers
   * Compatibility is determined by similar score to the team
   * All attributes are weighted equally
+  * Listed attributes are the same within the team
+    * Not all attributes may be present on applicants, though!
 
 ### Algo
   * Read in input file (user prompt for custom?)
