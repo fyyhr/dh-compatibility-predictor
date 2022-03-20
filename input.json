@@ -31,7 +31,7 @@
   "applicants": [
     {
       "name": "John",
-      "attrubites": {
+      "attributes": {
         "intelligence": 4,
         "strength": 5,
         "endurance": 2,
